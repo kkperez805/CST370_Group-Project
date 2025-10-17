@@ -1,3 +1,0 @@
-Graph loaded with 4 nodes and 4 edges.
-Source: 0, Target: 3
-No route from 0 to 3.
