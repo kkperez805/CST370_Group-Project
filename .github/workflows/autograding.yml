@@ -1,0 +1,85 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: T0
+      id: t0
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: T0
+        setup-command: clang++ -o a.out -std=c++17 main.cpp
+        command: "./a.out < input00.txt"
+        expected-output: |
+          Graph loaded with 6 nodes and 14 edges.
+          Source: 0, Target: 5
+          Fastest route: 0->2->3->5
+          Total cost: 6.00
+        comparison-method: exact
+        timeout: 10
+
+    - name: T1
+      id: t1
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: T1
+        setup-command: clang++ -o a.out -std=c++17 main.cpp
+        command: "./a.out < input01.txt"
+        expected-output: |
+          Graph loaded with 4 nodes and 10 edges.
+          Source: 0, Target: 3
+          Fastest route: 0->1->3
+          Total cost: 3.00
+        comparison-method: exact
+        timeout: 10
+
+    - name: T2
+      id: t2
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: T2
+        setup-command: clang++ -o a.out -std=c++17 main.cpp
+        command: "./a.out < input02.txt"
+        expected-output: |
+          Graph loaded with 4 nodes and 4 edges.
+          Source: 0, Target: 3
+          No route from 0 to 3.
+        comparison-method: exact
+        timeout: 10
+
+    - name: T3
+      id: t3
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: T3
+        setup-command: clang++ -o a.out -std=c++17 main.cpp
+        command: "./a.out < input03.txt"
+        expected-output: |
+          Graph loaded with 5 nodes and 10 edges.
+          Source: 0, Target: 4
+          Fastest route: 0->1->4
+          Total cost: 5.00
+        comparison-method: exact
+        timeout: 10
+
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        T0_RESULTS: "${{steps.t0.outputs.result}}"
+        T1_RESULTS: "${{steps.t1.outputs.result}}"
+        T2_RESULTS: "${{steps.t2.outputs.result}}"
+        T3_RESULTS: "${{steps.t3.outputs.result}}"
+      with:
+        runners: t0,t1,t2,t3
