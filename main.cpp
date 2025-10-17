@@ -162,7 +162,9 @@ void showRoute(const Graph& g, const string& src, const string& tgt, int nodes, 
         cout << path[i];
         if (i + 1 < path.size()) cout << "->"; // arrow between nodes
     }
-    cout << "\nTotal cost: " << fixed << setprecision(2) << r.dist[tgt];
+    // cout << "\nTotal cost: " << fixed << setprecision(2) << r.dist[tgt];
+    // Mathew: An endline is added because it makes the code print cleaner.
+    cout << "\nTotal cost: " << fixed << setprecision(2) << r.dist[tgt] << endl;
 }
 
 // ---------- Main ----------
