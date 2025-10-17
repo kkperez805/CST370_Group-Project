@@ -1,0 +1,4 @@
+Graph loaded with 6 nodes and 14 edges.
+Source: 0, Target: 5
+Fastest route: 0 -> 2 -> 3 -> 5
+Total cost: 6.00
